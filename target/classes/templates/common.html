@@ -1,0 +1,242 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+	<meta charset="UTF-8">
+	<title>高校就业管理系统</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+	<link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+    <style>
+        th{
+          text-align: center;
+        }
+        td{
+            text-align: center;
+        }
+
+    </style>
+</head>
+<body>
+    <!-- 顶部开始 -->
+    <div class="container" id="topbar">
+        <div class="logo">高校就业管理系统 </div>
+        <div class="open-nav"><i class="iconfont">&#xe699;</i></div>
+        <ul class="layui-nav right" lay-filter="">
+          <li class="layui-nav-item">
+            <a th:type="hidden" th:if="${session.loginuser.getTypes()}==0">管理员 [[${session.loginuser.getUserName()}]]</a>
+              <a th:type="hidden" th:if="${session.loginuser.getTypes()}==1">毕业生 [[${session.loginuser.getUserName()}]]</a>
+<!--              <a th:type="hidden" th:if="${session.loginuser.getTypes()}==2">超级管理员 [[${session.loginuser.getUserName()}]]</a>-->
+            <dl class="layui-nav-child"> <!-- 二级菜单 -->
+<!--              <dd><a href="">个人信息</a></dd>-->
+              <dd><a href="" th:href="@{/tologin}">切换帐号</a></dd>
+              <dd><a href="" th:href="@{/tologin}">退出</a></dd>
+            </dl>
+          </li>
+        </ul>
+    </div>
+    <!-- 顶部结束 -->
+    <!-- 中部开始 -->
+        <!-- 左侧菜单开始 -->
+        <div class="left-nav" id="leftbar">
+          <div id="side-nav">
+            <ul id="nav">
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe70b;</i>
+                        信息全览
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a th:href="@{/toindex}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                毕业生信息
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list" current>
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe70b;</i>
+                        信息统计
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a th:href="@{/classeslist}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                班级统计
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/skipEcharts}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                方向统计
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/companyshow}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                公司统计
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/salaryshow}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                薪资统计
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/regionshow}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                地区统计
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+                <li class="list" type="hidden" th:if="${session.loginuser.getTypes()==0}">
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe70b;</i>
+                        公告管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a th:href="@{/contantList}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                查看公告
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list" type="hidden" th:if="${session.loginuser.getTypes()==1}">
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe70b;</i>
+                        公告管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a th:href="@{/select}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                查看公告
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+                <li class="list" type="hidden" th:if="${session.loginuser.getTypes()==1}">
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe70b;</i>
+                        就业统计
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a th:href="@{/scount}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                毕业生就业统计
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/out}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                就业信息登记结果
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+
+                <li class="list" type="hidden" th:if="${session.loginuser.getTypes()!=1}">
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe6a3;</i>
+                        就业管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li>
+                            <a th:href="@{/memberlist}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                毕业生信息管理
+                            </a>
+                        </li>
+                        <li>
+                            <a th:href="@{/scount1}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                毕业生信息审核
+                            </a>
+                        </li>
+
+                    </ul>
+                </li>
+
+                <li class="list" >
+                    <a href="javascript:;">
+                        <i class="iconfont">&#xe6a3;</i>
+                        帐户管理
+                        <i class="iconfont nav_right">&#xe697;</i>
+                    </a>
+                    <ul class="sub-menu">
+                        <li th:if="${session.loginuser.getTypes()!=1}">
+                            <a th:href="@{/manageaccount}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                管理员账户管理
+                            </a>
+                        </li>
+                        <li th:if="${session.loginuser.getTypes()==1}">
+                            <a th:href="@{/account}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                账户管理
+                            </a>
+                        </li>
+                        <li th:if="${session.loginuser.getTypes()==2}">
+                            <a th:href="@{/manageaccount}">
+                                <i class="iconfont">&#xe6a7;</i>
+                                管理员账户管理
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+            </ul>
+          </div>
+        </div>
+        <!-- 左侧菜单结束 -->
+
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <div class="footer" style="position:fixed;bottom:0px;" id="bottombar">
+        <div class="copyright" style="text-align: center">本系统就是毕业设计</div>
+    </div>
+    <!-- 底部结束 -->
+    <!-- 背景切换开始 -->
+	<div class="bg-changer" id="backbar">
+        <div class="swiper-container changer-list">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide"><img class="item" src="./images/a.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="./images/b.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="./images/c.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="./images/d.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="./images/e.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="./images/f.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="./images/g.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="./images/h.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="./images/i.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="./images/j.jpg" alt=""></div>
+                <div class="swiper-slide"><img class="item" src="./images/k.jpg" alt=""></div>
+                <div class="swiper-slide"><span class="reset">初始化</span></div>
+            </div>
+        </div>
+        <div class="bg-out"></div>
+        <div id="changer-set"><i class="iconfont">&#xe696;</i></div>   
+    </div>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>公告管理</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="./css/font.css">
+    <link rel="stylesheet" href="./css/xadmin.css">
+    <link rel="stylesheet" href="https://cdn.bootcss.com/Swiper/3.4.2/css/swiper.min.css">
+    <script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.bootcss.com/Swiper/3.4.2/js/swiper.jquery.min.js"></script>
+    <script src="./lib/layui/layui.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/xadmin.js"></script>
+
+</head>
+<body>
+    <!-- 顶部开始 -->
+    <div th:replace="common::#topbar"></div>
+    <!-- 顶部结束 -->
+    <!-- 中部开始 -->
+    <div class="wrapper">
+        <!-- 左侧菜单开始 -->
+        <div th:replace="common::#leftbar"></div>
+        <!-- 左侧菜单结束 -->
+        <!-- 右侧主体开始 -->
+        <div class="page-content">
+          <div class="content">
+            <!-- 右侧内容框架，更改从这里开始 -->
+              <xblock>
+                  <!--                member_add-->
+                  <a style="color: chartreuse" th:href="@{/add}">添加</a>
+
+                  <span class="x-right" style="line-height:40px">共有数据：[[${num}]] 条</span>
+              </xblock>
+            <table class="layui-table" >
+                <thead>
+                    <tr>
+                        <th>序号</th>
+                        <th>类别</th>
+                        <th>标题</th>
+                        <th>内容</th>
+                        <th>时间</th>
+                        <th>删除</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:each="contant:${contantList}">
+                        <td th:text="${contant.id}">用户编号</td>
+                        <td th:text="${contant.type}">类型</td>
+                        <td th:text="${contant.title}">标题</td>
+                        <td th:text="${contant.constant}">内容</td>
+                        <td th:text="${#dates.format(contant.time, 'yyyy-MM-dd')}">时间</td>
+                        <td class="td-manage">
+
+                            <!--                            member_edit-->
+                            <a title="编辑" th:href="@{/edit/}+${contant.id}" methods="post">
+                                <button type="button" class="layui-btn">编辑</button>
+                            </a>
+                            <!--                            member_del-->
+                            <a title="删除" th:href="@{/del/}+${contant.id}" methods="post">
+                                <button type="button" class="layui-btn layui-btn-danger">删除</button>
+                            </a>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            <!-- 右侧内容框架，更改从这里结束 -->
+          </div>
+        </div>
+        <!-- 右侧主体结束 -->
+    </div>
+    <!-- 中部结束 -->
+    <!-- 底部开始 -->
+    <div th:replace="common::#bottombar"></div>
+    <!-- 底部结束 -->
+    <!-- 背景切换开始 -->
+    <div th:replace="common::#backbar"></div>
+
+</body>
+</html>

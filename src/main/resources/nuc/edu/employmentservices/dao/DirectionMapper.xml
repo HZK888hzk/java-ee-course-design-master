@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="nuc.edu.employmentservices.dao.DirectionMapper">
+
+    <select id="getAllDirection" resultType="Direction">
+        select * from direction
+    </select>
+
+    <select id="getDirectionById" parameterType="Integer" resultType="Direction">
+        select * from direction where dirID=#{dirID}
+    </select>
+
+    <resultMap id="dirGra" type="Direction">
+        <id property="dirID" column="dirID"></id>
+        <result property="dirName" column="dirName"></result>
+        <result property="directionnum" column="directionnum"></result>
+        <collection property="gralist" ofType="Graduates">
+            <id property="graID" column="graID"></id>
+            <result property="graSex" column="graSex"></result>
+            <result property="graTel" column="graTel"></result>
+            <result property="graTime" column="graTime"></result>
+            <result property="graSalary" column="graSalary"></result>
+            <association property="classes" javaType="Classes">
+                <id property="classId" column="classId"></id>
+                <result property="classNum" column="classNum"></result>
+            </association>
+
+            <association property="company" javaType="Company">
+                <id property="comId" column="comId"></id>
+                <result property="comName" column="comName"></result>
+                <result property="comMeg" column="comMeg"></result>
+                <result property="comAddress" column="comAddress"></result>
+                <result property="comHr" column="comHr"></result>
+                <result property="comHrTel" column="comHrTel"></result>
+            </association>
+
+            <association property="user" javaType="User">
+                <id property="userId" column="userId"></id>
+                <result property="userName" column="userName"></result>
+                <result property="graID" column="graID"></result>
+            </association>
+        </collection>
+    </resultMap>
+
+    <select id="getDirectionGraById" parameterType="Integer" resultMap="dirGra">
+       select newGra.* from direction,
+		(select graduate.*,classes.*,company.*,`user`.userName,direction.*
+            from graduate,classes,company,`user`,direction
+            where graduate.graClassId=classes.classId
+                    and graduate.graComId=company.comId
+                    and graduate.graId=`user`.graID
+										and graduate.graDirId=direction.dirID
+		) newGra
+    where direction.dirID=newGra.graDirId and direction.dirID=#{dirID}
+    </select>
+
+    <select id="getDirectionCount" resultType="Integer">
+        select count(*) num from direction
+    </select>
+
+    <select id="getDirectionNums" resultMap="dirGra">
+       select direction.dirID,direction.dirName,count(*) directionnum
+        from direction,graduate
+            where direction.dirID=graduate.graDirId
+            GROUP BY direction.dirID
+            ORDER BY direction.dirID
+
+
+    </select>
+
+</mapper>

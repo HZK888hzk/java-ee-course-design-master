@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!--		//引入thymeleaf插件，用于前后端数据交互-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta charset="utf-8">
+		<title>高校就业管理系统</title>
+		<link href="./css/login.min.css" rel="stylesheet">
+	</head>
+	<body scroll=no>
+		<div class='container'>
+<!--			<logo> <img src="images/logo.png"> </logo>-->
+			<h1 style="color: chartreuse">高校就业管理系统</h1>
+			<div class="login">
+				<div class="adBox">
+					<div class="ad" style="height: 450px ; width: 450px;  overflow: hidden; position: relative "  >
+                        <img src="../images/ad.png" alt="" height="350px" width="350px"  >
+                    </div>
+				</div>
+				<div class="form">
+					<div class="title">
+						<div class="tabs active">账号登录</div>
+						<div class="tabs">管理员登录</div>
+					</div>
+					<form th:action="@{/login}" method="post">
+						<div class="content">
+							<div class="formRow"><input type="text" name="uname" class="text user" placeholder="请输入用户名" /></div>
+							<div class="formRow"><input type="password" name="pws" class="text pwd" placeholder="请输入密码" /></div>
+							<div class="formRow">
+								<div class="tip"><span class="ico">?</span><span class="text">温馨提示</span></div>
+								<div class="remember"><input type="checkbox"> 记住密码</div>
+							</div>
+							<div class="formRow">
+								<input type="submit" value="登 录" class="btn" />
+							</div>
+						</div>
+
+					</form>
+					<div class="content hide">
+							<form th:action="@{/login}" method="post">
+								<div class="content1">
+									<div class="formRow1"><input type="text" name="uname" class="text user1" placeholder="请输入用户名" /></div>
+									<div class="formRow1"><input type="password" name="pws" class="text pwd1" placeholder="请输入密码" /></div>
+									<div class="formRow">
+										<div class="tip"><span class="ico">?</span><span class="text">温馨提示</span></div>
+										<div class="remember"><input type="checkbox"> 记住密码</div>
+									</div>
+									<div class="formRow1">
+										<input type="submit" value="登 录" class="btn" />
+									</div>
+
+								</div>
+							</form>
+					</div>
+				</div>
+				<!--<div class="info"></div>-->
+			</div>
+		</div>
+	</body>
+	<script src="./js/jquery.min.js"></script>
+</html>
